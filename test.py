@@ -1,53 +1,57 @@
-import operator
-path = 'C:\\text2.txt'
-with open(path, 'r') as f:
-    text = f.read().split()
-slov = dict()
-t_slov = dict()
-wordlist = set()
-minlet = 'a'
+import time
+import time
 
-for word in text:
-    wordlist.add(word)
-wordlist = list(wordlist)
-wordlist.sort()
+start_time = time.time()
 
-for word in wordlist:
-    slov[word] = {}
-    t_slov[word] = 0
 
-for word in slov:
-    slov[word] = t_slov.copy()
+def main():
+    path = 'C:\\text2.txt'
+    with open(path, 'r') as f:
+        text = f.read().split()
+    slov = dict()
+    t_slov = dict()
+    wordlist = set()
+    minlet = 'a'
 
-# print(slov)
+    for word in text:
+        wordlist.add(word)
+    wordlist = list(wordlist)
+    wordlist.sort()
 
-wordnum = 0
+    for word in wordlist:
+        slov[word] = {}
+        t_slov[word] = 0
 
-for wordnum in range(text.__len__() - 1):
-    word = text[wordnum]
-    nextword = text[wordnum + 1]
-    slov[word][nextword] = slov[word][nextword] + 1
-print(slov)
+    for word in slov:
+        slov[word] = t_slov.copy()
 
-kolvolist = []
-chistiylist = []
-sum = 0
+    # print(slov)
 
-for word in wordlist:
-    for word2 in wordlist:
-        if (slov[word][word2] not in kolvolist):
+    wordnum = 0
+
+    for wordnum in range(text.__len__() - 1):
+        word = text[wordnum]
+        nextword = text[wordnum + 1]
+        slov[word][nextword] = slov[word][nextword] + 1
+    # print(slov)
+
+    kolvolist = []
+    chistiylist = []
+    sum = 0
+
+    for word in wordlist:
+        for word2 in wordlist:
             if slov[word][word2] > 1:
-                kolvolist.append(slov[word][word2])
-        else:
-            kolvolist.remove(slov[word][word2])
-    sum = sum + kolvolist.__len__()
-    chistiylist.append(kolvolist.copy())
-    print(kolvolist)
-    kolvolist.clear()
+                kolvolist.append([slov[word][word2], word2])
+        sum = sum + kolvolist.__len__()
+        chistiylist.append(kolvolist.copy())
+        if kolvolist != []:
+            print(kolvolist, word)
+        kolvolist.clear()
 
-print(sum)
-# for word in wordlist:
-#    for word2 in wordlist:
-#        for num in range(0,chistiylist.__len__()-1):
+    print("СУММА: ", sum)
 
-print(chistiylist)
+
+main()
+print("--- %s seconds ---", (time.time() - start_time))
+# print(chistiylist)
